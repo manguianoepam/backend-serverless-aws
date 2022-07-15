@@ -1,0 +1,17 @@
+{
+  "name": "backend-serverless-aws",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc --reporter=text mocha test/test.js --timeout 100000 --exit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.6",
+    "lambda-tester": "^4.0.1",
+    "mocha": "^10.0.0"
+  }
+}
