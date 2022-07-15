@@ -66,17 +66,37 @@ functions:
           path: product #endpoint path
           method: get
   getProductsList:
-      handler: get-products.getProductsList
-      events:
-        - http:
-            path: products
-            method: get
+    handler: get-products.getProductsList
+    events:
+      - http:
+          path: products
+          method: get
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
   getProductsById:
     handler: get-product.getProductById
     events:
       - http:
-          path:  /products/{productId}
+          path: /products/{productId}
           method: get
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false
           request:
             parameters:
               paths:
