@@ -12,7 +12,8 @@
   "dependencies": {
     "chai": "^4.3.6",
     "lambda-tester": "^4.0.1",
-    "mocha": "^10.0.0"
+    "mocha": "^10.0.0",
+    "pg": "^8.7.3"
   },
   "devDependencies": {
     "serverless-webpack": "^5.7.1"
