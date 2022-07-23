@@ -24,8 +24,7 @@ describe('product-service', () => {
                     .event({})
                     .expectResult((data) => data);
 
-                expect(result.statusCode).to.equals(502)
-                //expect(result.message).to.equals('Data not provided');
+                expect(result.statusCode).to.equals(502);
             });
 
             it('should return 501 when not provide an ID', async () => {
@@ -33,9 +32,7 @@ describe('product-service', () => {
                     .event({'pathParameters': {'productId': ''}})
                     .expectResult((data) => data);
 
-                console.log(result);
-                expect(result.statusCode).to.equals(501)
-                //expect(result.message).to.equals('Data not provided');
+                expect(result.statusCode).to.equals(501);
             });
 
             it('should return 501 when not provide productId parameter', async () => {
@@ -44,8 +41,7 @@ describe('product-service', () => {
                     .expectResult((data) => data);
 
                 console.log(result);
-                expect(result.statusCode).to.equals(501)
-                //expect(result.message).to.equals('Data not provided');
+                expect(result.statusCode).to.equals(501);
             });
 
             it('should return a specific product by id', async () => {
@@ -53,22 +49,147 @@ describe('product-service', () => {
                     .event({'pathParameters': {'productId': '7567ec4b-b10c-48c5-9345-fc73c48a80aa'}})
                     .expectResult((data) => data);
 
-                console.log(result);
-                expect(result.statusCode).to.equals(200)
-                expect(JSON.parse(result.body).id).to.equals('ABC003');
+                expect(result.statusCode).to.equals(200);
+                expect(JSON.parse(result.body).id).to.equals('7567ec4b-b10c-48c5-9345-fc73c48a80aa');
             });
         });
+
         describe('create-product-lambda', () => {
-            it('create a product', async () => {
+            it('Should return 503 - when not received a body', async () => {
+                const result = await tester(createProduct)
+                    .event({})
+                    .expectResult(data => data);
+
+                expect(result.statusCode).to.equals(503);
+                expect(result.body).to.equals('Data not provided');
+            });
+
+            it('Should return 502 - when not received a body', async () => {
                 const result = await tester(createProduct)
                     .event({
-                        body: {
-                            title: 'Test product',
-                            description: 'Test description',
-                            price: 10,
-                            count: 5
+                        body: '{\r\n' +
+                            '    "title": "Test product :D",\r\n' +
+                            '    "description": "Test description",\r\n' +
+                            '    "price": 10\r\n' +
+                            '}',
+                    })
+                    .expectResult(data => data);
+
+                expect(result.statusCode).to.equals(502);
+                expect(result.body).to.equals('Missing Data');
+            });
+
+            it('Should return 500 - when use a wrong body', async () => {
+                const result = await tester(createProduct)
+                    .event({
+                        body: '{\r\n' +
+                            '    "title": "Test product :D",\r\n' +
+                            '    "description": "Test description",\r\n' +
+                            '    "price": 10,\r\n' +
+                            '}',
+                    })
+                    .expectResult(data => data);
+
+                expect(result.statusCode).to.equals(500);
+            });
+
+            it('Should return 201 - create a product', async () => {
+                const result = await tester(createProduct)
+                    .event(
+                        {
+                            resource: '/products',
+                            path: '/products',
+                            httpMethod: 'POST',
+                            headers: {
+                                Accept: '*/*',
+                                'Accept-Encoding': 'gzip, deflate, br',
+                                'CloudFront-Forwarded-Proto': 'https',
+                                'CloudFront-Is-Desktop-Viewer': 'true',
+                                'CloudFront-Is-Mobile-Viewer': 'false',
+                                'CloudFront-Is-SmartTV-Viewer': 'false',
+                                'CloudFront-Is-Tablet-Viewer': 'false',
+                                'CloudFront-Viewer-ASN': '28509',
+                                'CloudFront-Viewer-Country': 'MX',
+                                'Content-Type': 'application/json',
+                                Host: 'o3lc79zr1i.execute-api.us-east-1.amazonaws.com',
+                                'Postman-Token': 'da51eb72-aa2e-41ea-a120-6f14e21b1d94',
+                                'User-Agent': 'PostmanRuntime/7.29.2',
+                                Via: '1.1 e453cfec7ab7b0f50057381607edb486.cloudfront.net (CloudFront)',
+                                'X-Amz-Cf-Id': 'AL_XrwZDLODp365r4ALZNt8piYvuuKet9zEQGxBGUrTB68EID6Tr2w==',
+                                'X-Amzn-Trace-Id': 'Root=1-62db01d2-5bca1ccb57b50f957f73a1df',
+                                'X-Forwarded-For': '187.253.120.36, 130.176.179.78',
+                                'X-Forwarded-Port': '443',
+                                'X-Forwarded-Proto': 'https'
+                            },
+                            multiValueHeaders: {
+                                Accept: [ '*/*' ],
+                                'Accept-Encoding': [ 'gzip, deflate, br' ],
+                                'CloudFront-Forwarded-Proto': [ 'https' ],
+                                'CloudFront-Is-Desktop-Viewer': [ 'true' ],
+                                'CloudFront-Is-Mobile-Viewer': [ 'false' ],
+                                'CloudFront-Is-SmartTV-Viewer': [ 'false' ],
+                                'CloudFront-Is-Tablet-Viewer': [ 'false' ],
+                                'CloudFront-Viewer-ASN': [ '28509' ],
+                                'CloudFront-Viewer-Country': [ 'MX' ],
+                                'Content-Type': [ 'application/json' ],
+                                Host: [ 'o3lc79zr1i.execute-api.us-east-1.amazonaws.com' ],
+                                'Postman-Token': [ 'da51eb72-aa2e-41ea-a120-6f14e21b1d94' ],
+                                'User-Agent': [ 'PostmanRuntime/7.29.2' ],
+                                Via: [
+                                    '1.1 e453cfec7ab7b0f50057381607edb486.cloudfront.net (CloudFront)'
+                                ],
+                                'X-Amz-Cf-Id': [ 'AL_XrwZDLODp365r4ALZNt8piYvuuKet9zEQGxBGUrTB68EID6Tr2w==' ],
+                                'X-Amzn-Trace-Id': [ 'Root=1-62db01d2-5bca1ccb57b50f957f73a1df' ],
+                                'X-Forwarded-For': [ '187.253.120.36, 130.176.179.78' ],
+                                'X-Forwarded-Port': [ '443' ],
+                                'X-Forwarded-Proto': [ 'https' ]
+                            },
+                            queryStringParameters: null,
+                            multiValueQueryStringParameters: null,
+                            pathParameters: null,
+                            stageVariables: null,
+                            requestContext: {
+                                resourceId: 'cic4y4',
+                                resourcePath: '/products',
+                                httpMethod: 'POST',
+                                extendedRequestId: 'Vr046GH6oAMF93A=',
+                                requestTime: '22/Jul/2022:20:00:18 +0000',
+                                path: '/dev/products',
+                                accountId: '436988374415',
+                                protocol: 'HTTP/1.1',
+                                stage: 'dev',
+                                domainPrefix: 'o3lc79zr1i',
+                                requestTimeEpoch: 1658520018467,
+                                requestId: 'be81d25d-203b-4d50-9908-b173622b9b35',
+                                identity: {
+                                    cognitoIdentityPoolId: null,
+                                    accountId: null,
+                                    cognitoIdentityId: null,
+                                    caller: null,
+                                    sourceIp: '187.253.120.36',
+                                    principalOrgId: null,
+                                    accessKey: null,
+                                    cognitoAuthenticationType: null,
+                                    cognitoAuthenticationProvider: null,
+                                    userArn: null,
+                                    userAgent: 'PostmanRuntime/7.29.2',
+                                    user: null
+                                },
+                                domainName: 'o3lc79zr1i.execute-api.us-east-1.amazonaws.com',
+                                apiId: 'o3lc79zr1i'
+                            },
+                            body: '{\r\n' +
+                                '    "title": "Test product :D",\r\n' +
+                                '    "description": "Test description",\r\n' +
+                                '    "price": 10,\r\n' +
+                                '    "count": 5\r\n' +
+                                '}',
+                            isBase64Encoded: false
                         }
-                    }).expectResult(result => result);
+                    )
+                    .expectResult(data => data);
+
+                expect(result.statusCode).to.equals(201);
             });
         });
     });
