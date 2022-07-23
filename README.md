@@ -13,6 +13,14 @@ Endpoint backend: https://o3lc79zr1i.execute-api.us-east-1.amazonaws.com/dev
 - productId is String
 - curl --location --request GET 'https://o3lc79zr1i.execute-api.us-east-1.amazonaws.com/dev/products/ABC001'
 
+## POST - Create product - /product 
+### Description: Create a product
+
+- title: String - is required
+- description: String - is requires
+- price: Number - is required
+- count": Number - is required
+
 ## Frontend
 ### URL: http://epam-shopcart.s3-website-us-east-1.amazonaws.com/
 
