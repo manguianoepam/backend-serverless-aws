@@ -23,4 +23,3 @@ Endpoint backend: https://o3lc79zr1i.execute-api.us-east-1.amazonaws.com/dev
 
 ## Frontend
 ### URL: http://epam-shopcart.s3-website-us-east-1.amazonaws.com/
-
