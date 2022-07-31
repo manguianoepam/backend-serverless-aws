@@ -11,10 +11,18 @@
   "license": "ISC",
   "dependencies": {
     "chai": "^4.3.6",
+    "dotenv": "^16.0.1",
     "lambda-tester": "^4.0.1",
-    "mocha": "^10.0.0"
+    "mocha": "^10.0.0",
+    "pg": "^8.7.3",
+    "pg-connection-string": "^2.5.0",
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.13",
+    "webpack": "^5.73.0",
+    "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
+    "serverless-dotenv-plugin": "^4.0.1",
     "serverless-webpack": "^5.7.1"
   }
 }

@@ -1,5 +1,5 @@
 'use strict'
-const util = require('./util/functions');
+const util = require('./controller/products.controller');
 
 module.exports.getProductsList = async () => {
     const result = await util.selectAll()
@@ -15,7 +15,6 @@ module.exports.getProductsList = async () => {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': true,
         },
-        body: JSON.stringify(products),
-        //message: result.message
+        body: JSON.stringify(products)
     };
 };
