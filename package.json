@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1181.0",
     "chai": "^4.3.6",
+    "csv-parser": "^3.0.0",
     "dotenv": "^16.0.1",
     "lambda-tester": "^4.0.1",
     "mocha": "^10.0.0",
